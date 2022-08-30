@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'appGH.apps.AppghConfig',
+    'appCalendario.apps.AppcalendarioConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,6 +83,8 @@ DATABASES = {
     }
 }
 
+# User auth declaration
+AUTH_USER_MODEL = 'appGH.Usuario'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
