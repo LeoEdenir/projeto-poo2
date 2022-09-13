@@ -107,4 +107,3 @@ class Paciente(models.Model):
 
     def __str__(self):
         return f"Paciente - {self.usuario_id.get_full_name()}"
-
