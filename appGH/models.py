@@ -16,9 +16,9 @@ class Usuario(AbstractUser):
         ('masculino', 'Masculino'),
     ]
 
-    tipo_usuario = models.CharField(verbose_name="Tipo de usuário", choices=TIPOS_USUARIOS, max_length=10)
-    sexo = models.CharField(verbose_name="Sexo", choices=SEXOS, max_length=10)
-    data_nascimento = models.DateField(verbose_name="Data de nascimento")
+    tipo_usuario = models.CharField(verbose_name="Tipo de usuário", choices=TIPOS_USUARIOS, max_length=10, blank=True, null=True)
+    sexo = models.CharField(verbose_name="Sexo", choices=SEXOS, max_length=10, blank=True, null=True)
+    data_nascimento = models.DateField(verbose_name="Data de nascimento", blank=True, null=True)
 
     class Meta:
         verbose_name = "Usuário"
@@ -26,7 +26,7 @@ class Usuario(AbstractUser):
         ordering = ("first_name",)
 
     def __str__(self):
-        return self.get_full_name()
+        return self.username
 
     @property
     def age(self):
