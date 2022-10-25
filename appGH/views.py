@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
-from appGH.forms import SignUpForm
+from appGH.forms import SignUpForm, UserForm, PacienteForm
+from appGH.models import Paciente
 
 
 def cadastrar_usuario(request, *args, **kwargs):
@@ -50,4 +52,42 @@ def deslogar_usuario(request):
 
 
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect('logar_usuario')
+
     return render(request, 'index.html', {})
+
+
+def prontuario(request, id_paciente):
+    if not id_paciente:
+        messages.error(request, 'Paciente não informado')
+        return redirect('index')
+
+    paciente = get_object_or_404(Paciente, id=id_paciente)
+    context = {}
+    user = request.user
+
+    if not user.is_authenticated:
+        return redirect('logar_usuario')
+
+    context['active_tab'] = 'cadastro'
+    form_usuario = UserForm(instance=paciente.usuario_id)
+    form_paciente = PacienteForm(instance=paciente)
+
+    if request.method == 'POST':
+        if "form-usuario" in request.POST:
+            form = UserForm(request.POST, instance=paciente.usuario_id)
+            if form.is_valid():
+                form.save()
+            form_usuario = form
+
+        if "form-paciente" in request.POST:
+            form = PacienteForm(request.POST, instance=paciente)
+            if form.is_valid():
+                form.save()
+            form_paciente = form
+            context['active_tab'] = 'medico'
+
+    context['form_usuario'] = form_usuario
+    context['form_paciente'] = form_paciente
+    return render(request, 'prontuario.html', context)

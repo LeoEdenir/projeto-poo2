@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="d-flex align-items-start">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link {% if active_tab == 'cadastro' %}active{% endif %}" id="cadastro-tab"
+                    data-bs-toggle="pill" data-bs-target="#cadastro" type="button" role="tab" aria-controls="cadastro"
+                    aria-selected="true">Cadastro
+            </button>
+            <button class="nav-link {% if active_tab == 'medico' %}active{% endif %}" id="dados-medicos-tab"
+                    data-bs-toggle="pill" data-bs-target="#dados-medicos" type="button" role="tab"
+                    aria-controls="dados-medicos" aria-selected="false">Dados médicos
+            </button>
+        </div>
+        <div class="tab-content" id="v-pills-tabContent">
+
+            {#  Aba dados cadastrais  #}
+            <div class="tab-pane fade {% if active_tab == 'cadastro' %}show active{% endif %}" id="cadastro"
+                 role="tabpanel" aria-labelledby="cadastro-tab">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        {{ form_usuario.first_name.errors }}
+                        <label>Primeiro nome: </label>
+                        {{ form_usuario.first_name }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.last_name.errors }}
+                        <label>Último nome: </label>
+                        {{ form_usuario.last_name }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.email.errors }}
+                        <label>Email: </label>
+                        {{ form_usuario.email }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.sexo.errors }}
+                        <label>Sexo: </label>
+                        {{ form_usuario.sexo }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.data_nascimento.errors }}
+                        <label>Data de nascimento: </label>
+                        {{ form_usuario.data_nascimento }}
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Enviar" name="form-usuario" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+
+            {#  Aba dados médicos  #}
+            <div class="tab-pane fade {% if active_tab == 'medico' %}show active{% endif %}" id="dados-medicos"
+                 role="tabpanel" aria-labelledby="dados-medicos-tab">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        {{ form_paciente.hipertensao.errors }}
+                        <label>Hipertensão: </label>
+                        {{ form_paciente.hipertensao }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.depressao.errors }}
+                        <label>Depressão: </label>
+                        {{ form_paciente.depressao }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.ansiedade.errors }}
+                        <label>Ansiedade: </label>
+                        {{ form_paciente.ansiedade }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.diabetes_tipo_1.errors }}
+                        <label>Diabetes tipo 1: </label>
+                        {{ form_paciente.diabetes_tipo_1 }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.diabetes_tipo_2.errors }}
+                        <label>Diabetes tipo 2: </label>
+                        {{ form_paciente.diabetes_tipo_2 }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.hipotireoidismo.errors }}
+                        <label>Hipotireoidismo: </label>
+                        {{ form_paciente.hipotireoidismo }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.hepatite_b.errors }}
+                        <label>Hepatite B: </label>
+                        {{ form_paciente.hepatite_b }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.hepatite_c.errors }}
+                        <label>Hepatite C: </label>
+                        {{ form_paciente.hepatite_c }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.asma.errors }}
+                        <label>Asma: </label>
+                        {{ form_paciente.asma }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.epilepsia.errors }}
+                        <label>Epilepsia: </label>
+                        {{ form_paciente.epilepsia }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.aids.errors }}
+                        <label>Aids: </label>
+                        {{ form_paciente.aids }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.avc.errors }}
+                        <label>Teve AVC: </label>
+                        {{ form_paciente.avc }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.demencia.errors }}
+                        <label>Demência: </label>
+                        {{ form_paciente.demencia }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.altura.errors }}
+                        <label>Altura (cm): </label>
+                        {{ form_paciente.altura }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.peso.errors }}
+                        <label>Peso (kg): </label>
+                        {{ form_paciente.peso }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_paciente.informacoes_adicionais.errors }}
+                        <label>Informações adicionais: </label>
+                        {{ form_paciente.informacoes_adicionais }}
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Enviar" name="form-paciente" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

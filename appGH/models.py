@@ -25,6 +25,17 @@ class Usuario(AbstractUser):
         verbose_name_plural = "Usuários"
         ordering = ("first_name",)
 
+    def save(self, *args, **kwargs):
+        super(Usuario, self).save(*args, **kwargs)
+
+        if self._state.adding:
+            if self.tipo_usuario == "patient":
+                Paciente.objects.create(usuario_id=self)
+            elif self.tipo_usuario == "doctor":
+                Medico.objects.create(usuario_id=self)
+            elif self.tipo_usuario == "secretary":
+                Secretario.objects.create(usuario_id=self)
+
     def __str__(self):
         return self.username
 
@@ -52,7 +63,8 @@ class Usuario(AbstractUser):
 class Medico(models.Model):
     usuario_id = models.OneToOneField(verbose_name="Usuário", to=Usuario, related_name="doctor",
                                       on_delete=models.CASCADE)
-    registro_profissional = models.CharField(verbose_name="Registro profissional", max_length=255)
+    registro_profissional = models.CharField(verbose_name="Registro profissional", max_length=255, blank=True,
+                                             null=True)
 
     class Meta:
         verbose_name = "Médico"
@@ -65,7 +77,7 @@ class Medico(models.Model):
 class Secretario(models.Model):
     usuario_id = models.OneToOneField(verbose_name="Usuário", to=Usuario, related_name="secretary",
                                       on_delete=models.CASCADE)
-    data_admissao = models.DateField(verbose_name="Data de admissão")
+    data_admissao = models.DateField(verbose_name="Data de admissão", blank=True, null=True)
 
     class Meta:
         verbose_name = "Secretário"
