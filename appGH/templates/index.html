@@ -2,55 +2,59 @@
 {% load static %}
 
 {% block content %}
-<h1>Menu</h1>
+    <h1>Menu</h1>
 
-<div class='row text-center mt-5'>
-    <div class='col-6 col-lg-2 col-md-3'>
-        <a class='dash-link' href=''>
-            <img
-                class='img-fluid'
-                height='150'
-                width='150'
-                src='{% static 'images/calendar.png' %}'
-                alt='agenda'/>
-            <p>Agenda</p>
-        </a>
-    </div>
+    <div class='row text-center mt-5'>
+        <div class='col-6 col-lg-2 col-md-3'>
+            <a class='dash-link' href=''>
+                <img
+                        class='img-fluid'
+                        height='150'
+                        width='150'
+                        src='{% static 'images/calendar.png' %}'
+                        alt='agenda'/>
+                <p>Agenda</p>
+            </a>
+        </div>
 
-    <div class='col-6 col-lg-2 col-md-3'>
-        <a class='dash-link' href='{% url "pacientes" %}'>
-            <img
-                class='img-fluid'
-                height='150'
-                width='150'
-                src='{% static 'images/patients-icon.png' %}'
-                alt='pacientes'/>
-            <p>Pacientes</p>
-        </a>
-    </div>
+        <div class='col-6 col-lg-2 col-md-3'>
+            <a class='dash-link' href='{% url "pacientes" %}'>
+                <img
+                        class='img-fluid'
+                        height='150'
+                        width='150'
+                        src='{% static 'images/patients-icon.png' %}'
+                        alt='pacientes'/>
+                <p>Pacientes</p>
+            </a>
+        </div>
 
-    <div class='col-6 col-lg-2 col-md-3'>
-        <a class='dash-link' href='{% url "secretarios" %}'>
-            <img
-                class='img-fluid'
-                height='150'
-                width='150'
-                src='{% static 'images/secretarios-icon.png' %}'
-                alt='pacientes'/>
-            <p>Secretários</p>
-        </a>
-    </div>
+        {% if user.tipo_usuario == 'admin' or user.tipo_usuario == 'secretary' %}
+            <div class='col-6 col-lg-2 col-md-3'>
+                <a class='dash-link' href='{% url "secretarios" %}'>
+                    <img
+                            class='img-fluid'
+                            height='150'
+                            width='150'
+                            src='{% static 'images/secretarios-icon.png' %}'
+                            alt='pacientes'/>
+                    <p>Secretários</p>
+                </a>
+            </div>
+        {% endif %}
 
-    <div class='col-6 col-lg-2 col-md-3'>
-        <a class='dash-link' href='{% url "medicos" %}'>
-            <img
-                class='img-fluid'
-                height='150'
-                width='150'
-                src='{% static 'images/medico-icon.png' %}'
-                alt='medicos'/>
-            <p>Médicos</p>
-        </a>
+        {% if user.tipo_usuario == 'admin' or user.tipo_usuario == 'secretary' or user.tipo_usuario == 'doctor' %}
+            <div class='col-6 col-lg-2 col-md-3'>
+                <a class='dash-link' href='{% url "medicos" %}'>
+                    <img
+                            class='img-fluid'
+                            height='150'
+                            width='150'
+                            src='{% static 'images/medico-icon.png' %}'
+                            alt='medicos'/>
+                    <p>Médicos</p>
+                </a>
+            </div>
+        {% endif %}
     </div>
-</div>
 {% endblock %}

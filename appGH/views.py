@@ -61,13 +61,15 @@ def index(request):
 def pacientes(request):
     redirect_if_not_logged_in(request)
 
+    instances = Paciente.objects.all()
+    if request.user.tipo_usuario == "patient":
+        instances = instances.filter(usuario_id=request.user)
+
     buscar = request.GET.get('buscar')
     if buscar:
         instances = Paciente.objects.annotate(
             full_name=Concat('usuario_id__first_name', Value(' '), 'usuario_id__last_name')
         ).filter(full_name__icontains=buscar)
-    else:
-        instances = Paciente.objects.all()
 
     context = {'pacientes': instances}
     return render(request, 'pacientes.html', context)
@@ -107,13 +109,15 @@ def prontuario(request, paciente_id):
 def medicos(request):
     redirect_if_not_logged_in(request)
 
+    instances = Medico.objects.all()
+    if request.user.tipo_usuario == "doctor":
+        instances = instances.filter(usuario_id=request.user)
+
     buscar = request.GET.get('buscar')
     if buscar:
         instances = Medico.objects.annotate(
             full_name=Concat('usuario_id__first_name', Value(' '), 'usuario_id__last_name')
         ).filter(full_name__icontains=buscar)
-    else:
-        instances = Medico.objects.all()
 
     context = {'medicos': instances}
     return render(request, 'medicos.html', context)
@@ -153,13 +157,15 @@ def medico(request, medico_id):
 def secretarios(request):
     redirect_if_not_logged_in(request)
 
+    instances = Secretario.objects.all()
+    if request.user.tipo_usuario == "secretary":
+        instances = instances.filter(usuario_id=request.user)
+
     buscar = request.GET.get('buscar')
     if buscar:
         instances = Secretario.objects.annotate(
             full_name=Concat('usuario_id__first_name', Value(' '), 'usuario_id__last_name')
         ).filter(full_name__icontains=buscar)
-    else:
-        instances = Secretario.objects.all()
 
     context = {'secretarios': instances}
     return render(request, 'secretarios.html', context)
