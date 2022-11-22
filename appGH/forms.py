@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from appGH.models import Usuario, Paciente
+from appGH.models import Usuario, Paciente, Medico, Secretario
 
 
 class SignUpForm(UserCreationForm):
@@ -32,3 +32,15 @@ class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
         exclude = ('usuario_id', )
+
+
+class MedicoForm(forms.ModelForm):
+    class Meta:
+        model = Medico
+        fields = ('registro_profissional', )
+
+
+class SecretarioForm(forms.ModelForm):
+    class Meta:
+        model = Secretario
+        fields = ('data_admissao', )

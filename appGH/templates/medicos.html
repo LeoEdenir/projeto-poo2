@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <form method="get" action=".">
+        <label class="form-label" for="buscar">Buscar</label>
+        <div class="input-group mb-5">
+            <input type="search" name="buscar" id="buscar" class="form-control" value="{{ request.GET.buscar }}" autofocus>
+            <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Buscar</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+
+        {% if not medicos %}
+            <div class="col text-center">
+                <strong>Nenhum médico encontrado</strong>
+            </div>
+        {% else %}
+
+            {% for medico in medicos %}
+                <div class="col col-md-4">
+                    <a href="{% url 'medico' medico_id=medico.id %}" class="dash-link">
+                        <div class="card">
+                            <div class="row g-0">
+                                <div class="col col-md-4">
+                                    <img src='{% static 'images/user.png' %}' class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            {% if medico.usuario_id.get_full_name %}
+                                                {{ medico.usuario_id.get_full_name }}
+                                            {% else %}
+                                                Sem nome
+                                            {% endif %}
+                                        </h5>
+                                        <p class="card-text">
+                                            <small><strong>Idade: </strong>{{ medico.usuario_id.age }}</small>
+                                            <small><strong>Sexo: </strong>{{ medico.usuario_id.sexo }}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            {% endfor %}
+        {% endif %}
+
+    </div>
+{% endblock %}

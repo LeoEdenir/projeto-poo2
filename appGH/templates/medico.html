@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="d-flex align-items-start">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link {% if active_tab == 'cadastro' %}active{% endif %}" id="cadastro-tab"
+                    data-bs-toggle="pill" data-bs-target="#cadastro" type="button" role="tab" aria-controls="cadastro"
+                    aria-selected="true">Cadastro
+            </button>
+            <button class="nav-link {% if active_tab == 'medico' %}active{% endif %}" id="dados-medicos-tab"
+                    data-bs-toggle="pill" data-bs-target="#dados-medicos" type="button" role="tab"
+                    aria-controls="dados-medicos" aria-selected="false">Dados do médico
+            </button>
+        </div>
+        <div class="tab-content" id="v-pills-tabContent">
+
+            {#  Aba dados cadastrais  #}
+            <div class="tab-pane fade {% if active_tab == 'cadastro' %}show active{% endif %}" id="cadastro"
+                 role="tabpanel" aria-labelledby="cadastro-tab">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        {{ form_usuario.first_name.errors }}
+                        <label>Primeiro nome: </label>
+                        {{ form_usuario.first_name }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.last_name.errors }}
+                        <label>Último nome: </label>
+                        {{ form_usuario.last_name }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.email.errors }}
+                        <label>Email: </label>
+                        {{ form_usuario.email }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.sexo.errors }}
+                        <label>Sexo: </label>
+                        {{ form_usuario.sexo }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_usuario.data_nascimento.errors }}
+                        <label>Data de nascimento: </label>
+                        {{ form_usuario.data_nascimento }}
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Enviar" name="form-usuario" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+
+            {#  Aba dados do médico  #}
+            <div class="tab-pane fade {% if active_tab == 'medico' %}show active{% endif %}" id="dados-medicos"
+                 role="tabpanel" aria-labelledby="dados-medicos-tab">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        {{ form_medico.registro_profissional.errors }}
+                        <label>Registro profissional: </label>
+                        {{ form_medico.registro_profissional }}
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Enviar" name="form-medico" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

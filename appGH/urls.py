@@ -1,7 +1,8 @@
 from django.urls import path
 
 from . import views
-from .views import logar_usuario, cadastrar_usuario, deslogar_usuario, prontuario
+from .views import logar_usuario, cadastrar_usuario, deslogar_usuario, prontuario, pacientes, medicos, secretarios, \
+    medico, secretario
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -9,5 +10,12 @@ urlpatterns = [
     path('cadastro/', cadastrar_usuario, name="cadastrar_usuario"),
     path('logout/', deslogar_usuario, name="deslogar_usuario"),
 
-    path('prontuario/<int:id_paciente>/', prontuario, name="prontuario"),
+    path('pacientes/', pacientes, name="pacientes"),
+    path('pacientes/<int:paciente_id>/', prontuario, name="prontuario"),
+
+    path('medicos/', medicos, name="medicos"),
+    path('medicos/<int:medico_id>/', medico, name="medico"),
+
+    path('secretarios/', secretarios, name="secretarios"),
+    path('secretarios/<int:secretario_id>/', secretario, name="secretario"),
 ]
