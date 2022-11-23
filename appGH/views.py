@@ -22,6 +22,17 @@ def cadastrar_usuario(request, *args, **kwargs):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
+
+            user_type = form.cleaned_data['tipo_usuario']
+            if user_type == 'patient':
+                return redirect('prontuario', paciente_id=form.instance.patient.id)
+
+            if user_type == 'doctor':
+                return redirect('medico', medico_id=form.instance.doctor.id)
+
+            if user_type == 'secretary':
+                return redirect('secretario', secretario_id=form.instance.secretary.id)
+
             return redirect('index')
         else:
             context['form_usuario'] = form

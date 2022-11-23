@@ -21,6 +21,18 @@ class SignUpForm(UserCreationForm):
         model = Usuario
         fields = ('username', 'password1', 'password2', 'data_nascimento', 'tipo_usuario', 'sexo')
 
+    def save(self, commit=True):
+        instance = super(SignUpForm, self).save(commit=commit)
+
+        if instance.tipo_usuario == "patient":
+            Paciente.objects.create(usuario_id=instance)
+        elif instance.tipo_usuario == "doctor":
+            Medico.objects.create(usuario_id=instance)
+        elif instance.tipo_usuario == "secretary":
+            Secretario.objects.create(usuario_id=instance)
+
+        return instance
+
 
 class UserForm(forms.ModelForm):
     class Meta:
