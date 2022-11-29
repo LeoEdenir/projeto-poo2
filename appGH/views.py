@@ -44,6 +44,8 @@ def cadastrar_usuario(request, *args, **kwargs):
 
 
 def logar_usuario(request):
+    context = {}
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -53,9 +55,12 @@ def logar_usuario(request):
             return redirect('index')
         else:
             form_login = AuthenticationForm()
+            context['error'] = True
     else:
         form_login = AuthenticationForm()
-    return render(request, 'login.html', {'form_login': form_login})
+
+    context['form_login'] = form_login
+    return render(request, 'login.html', context)
 
 
 def deslogar_usuario(request):

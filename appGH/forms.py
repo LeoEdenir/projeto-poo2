@@ -11,8 +11,12 @@ class SignUpForm(UserCreationForm):
         ('secretary', 'Secretário'),
     ]
 
-    data_nascimento = forms.DateField(required=False, widget=forms.SelectDateWidget(
-        years=[str(i) for i in range(1900, 2022)]
+    data_nascimento = forms.DateField(required=False, widget=forms.DateInput(
+        attrs={
+            'class': 'form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'
+        },
+        format='%d/%m/%Y'
     ))
     tipo_usuario = forms.ChoiceField(choices=TIPOS_USUARIOS, required=False)
     sexo = forms.ChoiceField(choices=Usuario.SEXOS, required=False)

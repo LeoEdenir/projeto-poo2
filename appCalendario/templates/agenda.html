@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% load static %}
 
 {% block content %}
@@ -14,22 +16,13 @@
         });
     </script>
 
-    {#    <form method="get" action=".">#}
-    {#        <label class="form-label" for="buscar">Buscar</label>#}
-    {#        <div class="input-group mb-5">#}
-    {#            <input type="search" name="buscar" id="buscar" class="form-control" value="{{ request.GET.buscar }}" autofocus>#}
-    {#            <div class="input-group-append">#}
-    {#                <button class="btn btn-success" type="submit">Buscar</button>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </form>#}
-
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">Criar</button>
+    <a href="{% url 'agenda' %}" type="button" class="btn btn-warning mb-3">Atualizar</a>
 
-    {% if updated %}
+    {% if created %}
         <div class="alert alert-success" role="alert">
-            Atualizado criado com sucesso
+            Criado criado com sucesso
         </div>
     {% endif %}
 
@@ -48,42 +41,30 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="form-group">
-                            {{ form_agendamento.paciente_id.errors }}
-                            <label>Paciente: </label>
-                            {{ form_agendamento.paciente_id }}
+                        <div class="form-group mb-2">
+                            {{ form_agendamento.paciente_id|as_crispy_field }}
                         </div>
 
-                        <div class="form-group">
-                            {{ form_agendamento.medico_id.errors }}
-                            <label>Médico: </label>
-                            {{ form_agendamento.medico_id }}
+                        <div class="form-group mb-2">
+                            {{ form_agendamento.medico_id|as_crispy_field }}
                         </div>
 
                         {% if user.tipo_usuario == 'admin' %}
-                            <div class="form-group">
-                                {{ form_agendamento.secretario_id.errors }}
-                                <label>Secretário: </label>
-                                {{ form_agendamento.secretario_id }}
+                            <div class="form-group mb-2">
+                                {{ form_agendamento.secretario_id|as_crispy_field }}
                             </div>
                         {% endif %}
 
-                        <div class="form-group">
-                            {{ form_agendamento.data_hora.errors }}
-                            <label>Data e hora: </label>
-                            {{ form_agendamento.data_hora }}
+                        <div class="form-group mb-2">
+                            {{ form_agendamento.data_hora|as_crispy_field }}
                         </div>
 
-                        <div class="form-group">
-                            {{ form_agendamento.especialidade.errors }}
-                            <label>Especialidade: </label>
-                            {{ form_agendamento.especialidade }}
+                        <div class="form-group mb-4">
+                            {{ form_agendamento.especialidade|as_crispy_field }}
                         </div>
 
-                        <div class="form-group">
-                            {{ form_agendamento.teleconsulta.errors }}
-                            <label>É teleconsulta: </label>
-                            {{ form_agendamento.teleconsulta }}
+                        <div class="form-group mb-2">
+                            {{ form_agendamento.teleconsulta|as_crispy_field }}
                         </div>
 
                     </div>
@@ -110,7 +91,8 @@
         <tbody>
         {% if meetings %}
             {% for meeting in meetings %}
-                <tr class='clickable-row table-row' data-href="{% url 'agendamento' meeting.id %}?edit=False" style="cursor:pointer">
+                <tr class='clickable-row table-row' data-href="{% url 'agendamento' meeting.id %}?edit=False"
+                    style="cursor:pointer">
                     <td>{{ meeting.paciente_id }}</td>
                     <td>{{ meeting.medico_id }}</td>
                     <td>{{ meeting.secretario_id }}</td>

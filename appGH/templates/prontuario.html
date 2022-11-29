@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
 {% load static %}
 
 {% block content %}
+    {# DatePicker links and scripts #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+          integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"
+            integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $("#id_data_nascimento").datepicker({
+                format: 'dd/mm/yyyy',
+            });
+        });
+    </script>
+
     <div class="d-flex align-items-start">
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <button class="nav-link {% if active_tab == 'cadastro' %}active{% endif %}" id="cadastro-tab"
@@ -18,150 +33,124 @@
             {#  Aba dados cadastrais  #}
             <div class="tab-pane fade {% if active_tab == 'cadastro' %}show active{% endif %}" id="cadastro"
                  role="tabpanel" aria-labelledby="cadastro-tab">
+                <div class="mb-5">
+                    <h2>Dados cadastrais</h2>
+                </div>
+
                 <form method="post">
-                    {% csrf_token %}
+                    <fieldset {% if user.tipo_usuario == "patient" %}disabled="disabled"{% endif %}>
+                        {% csrf_token %}
 
-                    <div class="form-group">
-                        {{ form_usuario.first_name.errors }}
-                        <label>Primeiro nome: </label>
-                        {{ form_usuario.first_name }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_usuario.first_name|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_usuario.last_name.errors }}
-                        <label>Último nome: </label>
-                        {{ form_usuario.last_name }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_usuario.last_name|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_usuario.email.errors }}
-                        <label>Email: </label>
-                        {{ form_usuario.email }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_usuario.email|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_usuario.sexo.errors }}
-                        <label>Sexo: </label>
-                        {{ form_usuario.sexo }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_usuario.sexo|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_usuario.data_nascimento.errors }}
-                        <label>Data de nascimento: </label>
-                        {{ form_usuario.data_nascimento }}
-                    </div>
+                        <div class="form-group mb-5">
+                            {{ form_usuario.data_nascimento|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Enviar" name="form-usuario" class="btn btn-primary">
-                    </div>
+                        {% if user.tipo_usuario != "patient" %}
+                            <div class="form-group">
+                                <input type="submit" value="Salvar" name="form-usuario" class="btn btn-primary">
+                            </div>
+                        {% endif %}
+                    </fieldset>
                 </form>
             </div>
 
             {#  Aba dados médicos  #}
             <div class="tab-pane fade {% if active_tab == 'medico' %}show active{% endif %}" id="dados-medicos"
                  role="tabpanel" aria-labelledby="dados-medicos-tab">
-                <form method="post">
-                    {% csrf_token %}
+                <div class="mb-5">
+                    <h2>Dados Médicos</h2>
+                </div>
+                <form method="post" disabled="disabled">
+                    <fieldset {% if user.tipo_usuario == "patient" %}disabled="disabled"{% endif %}>
+                        {% csrf_token %}
 
-                    <div class="form-group">
-                        {{ form_paciente.hipertensao.errors }}
-                        <label>Hipertensão: </label>
-                        {{ form_paciente.hipertensao }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.hipertensao|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.depressao.errors }}
-                        <label>Depressão: </label>
-                        {{ form_paciente.depressao }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.depressao|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.ansiedade.errors }}
-                        <label>Ansiedade: </label>
-                        {{ form_paciente.ansiedade }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.ansiedade|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.diabetes_tipo_1.errors }}
-                        <label>Diabetes tipo 1: </label>
-                        {{ form_paciente.diabetes_tipo_1 }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.diabetes_tipo_1|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.diabetes_tipo_2.errors }}
-                        <label>Diabetes tipo 2: </label>
-                        {{ form_paciente.diabetes_tipo_2 }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.diabetes_tipo_2|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.hipotireoidismo.errors }}
-                        <label>Hipotireoidismo: </label>
-                        {{ form_paciente.hipotireoidismo }}
-                    </div>
+                        <div class="form-group mb-2">
 
-                    <div class="form-group">
-                        {{ form_paciente.hepatite_b.errors }}
-                        <label>Hepatite B: </label>
-                        {{ form_paciente.hepatite_b }}
-                    </div>
+                            {{ form_paciente.hipotireoidismo|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.hepatite_c.errors }}
-                        <label>Hepatite C: </label>
-                        {{ form_paciente.hepatite_c }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.hepatite_b|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.asma.errors }}
-                        <label>Asma: </label>
-                        {{ form_paciente.asma }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.hepatite_c|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.epilepsia.errors }}
-                        <label>Epilepsia: </label>
-                        {{ form_paciente.epilepsia }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.asma|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.aids.errors }}
-                        <label>Aids: </label>
-                        {{ form_paciente.aids }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.epilepsia|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.avc.errors }}
-                        <label>Teve AVC: </label>
-                        {{ form_paciente.avc }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.aids|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.demencia.errors }}
-                        <label>Demência: </label>
-                        {{ form_paciente.demencia }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.avc|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.altura.errors }}
-                        <label>Altura (cm): </label>
-                        {{ form_paciente.altura }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.demencia|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.peso.errors }}
-                        <label>Peso (kg): </label>
-                        {{ form_paciente.peso }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.altura|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        {{ form_paciente.informacoes_adicionais.errors }}
-                        <label>Informações adicionais: </label>
-                        {{ form_paciente.informacoes_adicionais }}
-                    </div>
+                        <div class="form-group mb-2">
+                            {{ form_paciente.peso|as_crispy_field }}
+                        </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Enviar" name="form-paciente" class="btn btn-primary">
-                    </div>
+                        <div class="form-group mb-5">
+                            {{ form_paciente.informacoes_adicionais|as_crispy_field }}
+                        </div>
+
+                        {% if user.tipo_usuario != "patient" %}
+                            <div class="form-group mb-5">
+                                <input type="submit" value="Salvar" name="form-paciente" class="btn btn-primary">
+                            </div>
+                        {% endif %}
+                    </fieldset>
                 </form>
             </div>
         </div>

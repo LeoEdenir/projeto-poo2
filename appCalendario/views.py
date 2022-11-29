@@ -33,6 +33,7 @@ def criar_agendamento(request):
         if form.is_valid():
             form.save()
             context["created"] = True
+            context["form_agendamento"] = AgendamentoForm()
         else:
             context["form_agendamento"] = form
 
@@ -53,6 +54,7 @@ def pegar_agendamento(request, agendamento_id):
         if form.is_valid():
             form.save()
             context["updated"] = True
+            context["form_agendamento"] = form
         else:
             context["form_agendamento"] = form
 
