@@ -8,10 +8,10 @@ from appGH.utils import redirect_if_not_logged_in
 def agenda(request):
     redirect_if_not_logged_in(request)
 
-    meetings = Agendamento.objects.all()
-
-    if request.user.tipo_usuario == "paciente":
-        meetings = meetings.filter(paciente_id__usuario_id=request.user)
+    if request.user.tipo_usuario == "patient":
+        meetings = Agendamento.objects.filter(paciente_id__usuario_id=request.user)
+    else:
+        meetings = Agendamento.objects.all()
 
     context = {
         "meetings": meetings,
@@ -58,7 +58,7 @@ def pegar_agendamento(request, agendamento_id):
         else:
             context["form_agendamento"] = form
 
-    elif request.method == 'GET' and request.user.tipo_usuario in ("admin", "secretary"):
+    elif request.method == 'GET':
         form = AgendamentoForm(instance=agendamento)
         context["form_agendamento"] = form
 
