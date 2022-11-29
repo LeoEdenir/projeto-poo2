@@ -71,7 +71,7 @@ class Medico(models.Model):
         verbose_name_plural = "Médicos"
 
     def __str__(self):
-        return f"Médico - {self.usuario_id.get_full_name()}"
+        return self.usuario_id.get_full_name() if self.usuario_id.get_full_name() else "Sem nome cadastrado"
 
 
 class Secretario(models.Model):
@@ -84,7 +84,7 @@ class Secretario(models.Model):
         verbose_name_plural = "Secretários"
 
     def __str__(self):
-        return f"Secretário - {self.usuario_id.get_full_name()}"
+        return self.usuario_id.get_full_name() if self.usuario_id.get_full_name() else "Sem nome cadastrado"
 
 
 class Paciente(models.Model):
@@ -118,4 +118,4 @@ class Paciente(models.Model):
         verbose_name_plural = "Pacientes"
 
     def __str__(self):
-        return f"Paciente - {self.usuario_id.get_full_name()}"
+        return self.usuario_id.get_full_name() if self.usuario_id.get_full_name() else "Sem nome cadastrado"

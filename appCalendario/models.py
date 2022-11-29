@@ -21,7 +21,7 @@ class Agendamento(models.Model):
         ("CP", "Clínica Pediátrica"),
     ]
 
-    especialidade = models.CharField(verbose_name="Especialidade", max_length=3)
+    especialidade = models.CharField(verbose_name="Especialidade", choices=ESPECIALIDADES, max_length=3)
     teleconsulta = models.BooleanField(verbose_name="É teleconsulta?", default=False)
 
     class Meta:

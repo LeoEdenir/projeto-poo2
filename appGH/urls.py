@@ -1,21 +1,19 @@
 from django.urls import path
 
 from . import views
-from .views import logar_usuario, cadastrar_usuario, deslogar_usuario, prontuario, pacientes, medicos, secretarios, \
-    medico, secretario
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('login/', logar_usuario, name="logar_usuario"),
-    path('cadastro/', cadastrar_usuario, name="cadastrar_usuario"),
-    path('logout/', deslogar_usuario, name="deslogar_usuario"),
+    path('login/', views.logar_usuario, name="logar_usuario"),
+    path('cadastro/', views.cadastrar_usuario, name="cadastrar_usuario"),
+    path('logout/', views.deslogar_usuario, name="deslogar_usuario"),
 
-    path('pacientes/', pacientes, name="pacientes"),
-    path('pacientes/<int:paciente_id>/', prontuario, name="prontuario"),
+    path('pacientes/', views.pacientes, name="pacientes"),
+    path('pacientes/<int:paciente_id>/', views.prontuario, name="prontuario"),
 
-    path('medicos/', medicos, name="medicos"),
-    path('medicos/<int:medico_id>/', medico, name="medico"),
+    path('medicos/', views.medicos, name="medicos"),
+    path('medicos/<int:medico_id>/', views.medico, name="medico"),
 
-    path('secretarios/', secretarios, name="secretarios"),
-    path('secretarios/<int:secretario_id>/', secretario, name="secretario"),
+    path('secretarios/', views.secretarios, name="secretarios"),
+    path('secretarios/<int:secretario_id>/', views.secretario, name="secretario"),
 ]

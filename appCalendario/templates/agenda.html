@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    {{ form_agendamento.media }}
+
+    <script>
+        $(document).ready(function ($) {
+            $(".table-row").click(function () {
+                console.log("teste")
+                window.document.location = $(this).data("href");
+            });
+        });
+    </script>
+
+    {#    <form method="get" action=".">#}
+    {#        <label class="form-label" for="buscar">Buscar</label>#}
+    {#        <div class="input-group mb-5">#}
+    {#            <input type="search" name="buscar" id="buscar" class="form-control" value="{{ request.GET.buscar }}" autofocus>#}
+    {#            <div class="input-group-append">#}
+    {#                <button class="btn btn-success" type="submit">Buscar</button>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </form>#}
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">Criar</button>
+
+    {% if updated %}
+        <div class="alert alert-success" role="alert">
+            Atualizado criado com sucesso
+        </div>
+    {% endif %}
+
+    <!-- Create Modal -->
+    <div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" id="myModal" role="document">
+            <div class="modal-content">
+                <form method="post" action="{% url 'criar_agendamento' %}">
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Criar agendamento</h5>
+                        <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            {{ form_agendamento.paciente_id.errors }}
+                            <label>Paciente: </label>
+                            {{ form_agendamento.paciente_id }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_agendamento.medico_id.errors }}
+                            <label>Médico: </label>
+                            {{ form_agendamento.medico_id }}
+                        </div>
+
+                        {% if user.tipo_usuario == 'admin' %}
+                            <div class="form-group">
+                                {{ form_agendamento.secretario_id.errors }}
+                                <label>Secretário: </label>
+                                {{ form_agendamento.secretario_id }}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            {{ form_agendamento.data_hora.errors }}
+                            <label>Data e hora: </label>
+                            {{ form_agendamento.data_hora }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_agendamento.especialidade.errors }}
+                            <label>Especialidade: </label>
+                            {{ form_agendamento.especialidade }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_agendamento.teleconsulta.errors }}
+                            <label>É teleconsulta: </label>
+                            {{ form_agendamento.teleconsulta }}
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="form-agendamento" class="btn btn-primary">Criar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr class="table-dark">
+            <th>Paciente</th>
+            <th>Médico</th>
+            <th>Secretário</th>
+            <th>Data e hora</th>
+            <th>Especialidade</th>
+            <th>É teleconsulta</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if meetings %}
+            {% for meeting in meetings %}
+                <tr class='clickable-row table-row' data-href="{% url 'agendamento' meeting.id %}?edit=False" style="cursor:pointer">
+                    <td>{{ meeting.paciente_id }}</td>
+                    <td>{{ meeting.medico_id }}</td>
+                    <td>{{ meeting.secretario_id }}</td>
+                    <td>{{ meeting.data_hora }}</td>
+                    <td>{{ meeting.get_especialidade_display }}</td>
+                    <td>{% if meeting.teleconsulta %}Sim{% else %}Não{% endif %}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

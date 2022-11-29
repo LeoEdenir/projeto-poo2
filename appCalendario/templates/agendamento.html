@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    {{ form_agendamento.media }}
+
+    <a href="{% url 'agenda' %}"><- Voltar</a>
+
+    {% if request.GET.edit == "True" %}
+        {% if user.tipo_usuario == 'admin' or user.tipo_usuario == 'secretary' %}
+            <form method="get" action=".">
+                <div class="input-group mb-5">
+                    <button class="btn btn-danger" name="edit" value="False">Cancelar</button>
+                </div>
+            </form>
+
+            <form method="post" action="{% url 'agendamento' agendamento.id %}">
+                {% csrf_token %}
+                <div class="form-body">
+
+                    <div class="form-group">
+                        {{ form_agendamento.paciente_id.errors }}
+                        <label>Paciente: </label>
+                        {{ form_agendamento.paciente_id }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_agendamento.medico_id.errors }}
+                        <label>Médico: </label>
+                        {{ form_agendamento.medico_id }}
+                    </div>
+
+                    {% if user.tipo_usuario == 'admin' %}
+                        <div class="form-group">
+                            {{ form_agendamento.secretario_id.errors }}
+                            <label>Secretário: </label>
+                            {{ form_agendamento.secretario_id }}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        {{ form_agendamento.data_hora.errors }}
+                        <label>Data e hora: </label>
+                        {{ form_agendamento.data_hora }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_agendamento.especialidade.errors }}
+                        <label>Especialidade: </label>
+                        {{ form_agendamento.especialidade }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_agendamento.teleconsulta.errors }}
+                        <label>É teleconsulta: </label>
+                        {{ form_agendamento.teleconsulta }}
+                    </div>
+
+                    <button type="submit" name="form-agendamento" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        {% endif %}
+    {% else %}
+        {% if user.tipo_usuario == 'admin' or user.tipo_usuario == 'secretary' %}
+            <form method="get" action=".">
+                <div class="input-group mb-5">
+                    <button class="btn btn-primary" name="edit" value="True">Editar</button>
+                </div>
+            </form>
+        {% endif %}
+
+        <div class="form-body">
+            <div class="form-group">
+                <label>Paciente: </label>{{ agendamento.paciente_id.usuario_id.get_full_name }}
+            </div>
+
+            <div class="form-group">
+                <label>Médico: </label>{{ agendamento.medico_id.usuario_id.get_full_name }}
+            </div>
+
+            <div class="form-group">
+                <label>Secretário: </label>{{ agendamento.secretario_id.usuario_id.get_full_name }}
+            </div>
+
+            <div class="form-group">
+                <label>Data e hora: </label>{{ agendamento.data_hora }}
+            </div>
+
+            <div class="form-group">
+                <label>Especialidade: </label>{{ agendamento.get_especialidade_display }}
+            </div>
+
+            <div class="form-group">
+                <label>É teleconsulta: </label>{{ agendamento.teleconsulta }}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
