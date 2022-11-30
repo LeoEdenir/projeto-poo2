@@ -77,60 +77,65 @@
                     <h2>Dados Médicos</h2>
                 </div>
                 <form method="post" disabled="disabled">
-                    <fieldset {% if user.tipo_usuario == "patient" %}disabled="disabled"{% endif %}>
+                    <div {% if user.tipo_usuario == "patient" %}disabled="disabled"{% endif %}>
                         {% csrf_token %}
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.hipertensao|as_crispy_field }}
-                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.hipertensao|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.depressao|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.depressao|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.ansiedade|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.ansiedade|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.diabetes_tipo_1|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.diabetes_tipo_1|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.diabetes_tipo_2|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.diabetes_tipo_2|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.hipotireoidismo|as_crispy_field }}
+                                </div>
 
-                            {{ form_paciente.hipotireoidismo|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.hepatite_b|as_crispy_field }}
+                                </div>
+                            </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.hepatite_b|as_crispy_field }}
-                        </div>
+                            <div class="col">
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.hepatite_c|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.hepatite_c|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.asma|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.asma|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.epilepsia|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.epilepsia|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.aids|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.aids|as_crispy_field }}
-                        </div>
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.avc|as_crispy_field }}
+                                </div>
 
-                        <div class="form-group mb-2">
-                            {{ form_paciente.avc|as_crispy_field }}
-                        </div>
-
-                        <div class="form-group mb-2">
-                            {{ form_paciente.demencia|as_crispy_field }}
+                                <div class="form-group mb-2">
+                                    {{ form_paciente.demencia|as_crispy_field }}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group mb-2">
@@ -150,7 +155,7 @@
                                 <input type="submit" value="Salvar" name="form-paciente" class="btn btn-primary">
                             </div>
                         {% endif %}
-                    </fieldset>
+                        </fieldset>
                 </form>
             </div>
         </div>
