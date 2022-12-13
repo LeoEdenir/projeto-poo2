@@ -13,7 +13,9 @@
         </div>
     </form>
 
-    <a href="{% url 'cadastrar_usuario' %}" type="button" class="btn btn-primary mb-3">Criar</a>
+    {% if user.tipo_usuario != 'doctor' %}
+        <a href="{% url 'cadastrar_usuario' %}" type="button" class="btn btn-primary mb-3">Criar</a>
+    {% endif %}
 
     <div class="row">
 

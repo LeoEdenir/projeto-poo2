@@ -77,7 +77,7 @@
                     <h2>Dados Médicos</h2>
                 </div>
                 <form method="post" disabled="disabled">
-                    <div {% if user.tipo_usuario == "patient" %}disabled="disabled"{% endif %}>
+                    <fieldset {% if user.tipo_usuario == "patient" %}disabled="disabled"{% endif %}>
                         {% csrf_token %}
 
                         <div class="row">

@@ -13,8 +13,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'pacientes' %}">Pacientes</a></li>
-                        <li><a class="dropdown-item" href="{% url 'secretarios' %}">Secretários</a></li>
-                        <li><a class="dropdown-item" href="{% url 'medicos' %}">Médicos</a></li>
+                        {% if user.tipo_usuario == 'admin' or user.tipo_usuario == 'secretary' %}
+                            <li><a class="dropdown-item" href="{% url 'secretarios' %}">Secretários</a></li>
+                        {% endif %}
+                        {% if user.tipo_usuario != 'patient' %}
+                            <li><a class="dropdown-item" href="{% url 'medicos' %}">Médicos</a></li>
+                        {% endif %}
                     </ul>
                 </li>
                 <li class="nav-item">
